@@ -1,0 +1,18 @@
+plugins {
+    id 'nebula.info' version '8.3.1'
+    id 'nebula.lint' version '16.9.0'
+}
+
+apply from: 'gradle/build-package.gradle'
+apply from: 'gradle/build-docker.gradle'
+apply from: 'gradle/publish.gradle'
+apply from: 'gradle/release.gradle'
+
+group 'se.devmind'
+
+sourceCompatibility = 1.14
+
+dependencies {
+    // Test
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

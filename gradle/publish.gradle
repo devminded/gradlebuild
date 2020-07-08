@@ -1,0 +1,10 @@
+apply plugin: 'maven-publish'
+
+// TODO
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            from components.web
+//        }
+//    }
+//}

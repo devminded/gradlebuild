@@ -1,0 +1,23 @@
+buildscript {
+    dependencies {
+        classpath 'net.researchgate:gradle-release:2.8.1'
+   }
+}
+apply plugin: 'net.researchgate.release'
+
+release {
+    failOnUpdateNeeded = true
+    failOnCommitNeeded = true
+    failOnPublishNeeded = true
+    failOnSnapshotDependencies = true
+    preTagCommitMessage = 'Release'
+    tagCommitMessage = ''
+    newVersionCommitMessage = 'Next development version'
+    tagTemplate = '${version}'
+
+    git {
+        requireBranch = '(master)|(release.*?)'
+        pushToRemote = 'origin'
+    }
+}
+afterReleaseBuild.dependsOn publish

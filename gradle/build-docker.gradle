@@ -1,0 +1,33 @@
+buildscript {
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:6.4.0'
+   }
+}
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerListImages
+
+task copyDockerResources(type: Copy) {
+    from "$buildDir/distributions/${rootProject.name}-${project.version}.zip"
+    from "docker"
+    into "$buildDir/docker"
+    rename("${rootProject.name}-${project.version}.zip", "application.zip")
+    include "**/*"
+}
+
+task checkDocker(type: DockerListImages) {
+    onNext {
+        project.ext.hasDocker = true
+    }
+    onError {
+        project.ext.hasDocker = false
+    }
+}
+
+task buildImage(type: DockerBuildImage, dependsOn: [checkDocker, copyDockerResources]) {
+    onlyIf { project.ext.hasDocker }
+    dockerFile = file("$buildDir/docker/jdk14/Dockerfile")
+    images.add("devmind/${rootProject.name}-jdk14")
+    images.add("devmind/${rootProject.name}-jdk14:${project.version}")
+}

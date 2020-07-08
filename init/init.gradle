@@ -1,0 +1,31 @@
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            mavenCentral()
+            jcenter()
+            gradlePluginPortal()
+            maven {
+                url 'https://plugins.gradle.org/m2/'
+            }
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            jcenter()
+            maven {
+                url 'https://plugins.gradle.org/m2/'
+            }
+        }
+    }
+}
+
+println "init script"
